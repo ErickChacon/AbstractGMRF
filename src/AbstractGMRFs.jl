@@ -12,6 +12,6 @@ include("structure-matrix.jl")
 include("gmrf.jl")
 # include("igmrf.jl")
 
-# export GMRF, RGMRF, CGMRF
+export GMRF, RGMRF, CGMRF
 
 end # module GMRF
