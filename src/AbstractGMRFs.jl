@@ -1,6 +1,7 @@
 module AbstractGMRFs
 
 using Meshes
+import SparseArrays: sparse, sparsevec, spdiagm, spzeros
 import SuiteSparse # this is only for fixes
 import FFTW
 import Distributions: InverseGamma, Gamma, Distributions
