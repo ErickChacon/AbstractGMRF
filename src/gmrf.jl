@@ -5,6 +5,10 @@ Construct a Gaussian Markov random field  with zero mean and precision matrix `Q
 """
 abstract type AbstractGMRF <: Distributions.ContinuousMultivariateDistribution end
 
+# function Base.length end
+# function structure end
+# function scale end
+
 ## Random generator
 
 function Distributions._rand!(rng::AbstractRNG, d::AbstractGMRF, x::AbstractVector{T}) where T<:Real
@@ -71,7 +75,7 @@ end
     return logpdf .+ lpdf
 end
 
-# Methods for abstractgmrf subtypes as gmrf, rgmrf, cgmrf.
+# Methods for abstractgmrf subtypes as gmrf, rgmrf, cgmrf, ggmrf.
 
 for filename in ["gmrf.jl", "rgmrf.jl", "cgmrf.jl"]
     include(joinpath("gmrf", filename))
