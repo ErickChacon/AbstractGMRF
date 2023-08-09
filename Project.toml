@@ -1,4 +1,4 @@
-name = "AbstractGMRFs"
+name = "GMRFs"
 uuid = "7a107670-92d6-4340-93bc-1b936fb31744"
 authors = ["Erick A. Chacón Montalván <e.chaconmontalvan@gmail.com>"]
 version = "0.1.0"

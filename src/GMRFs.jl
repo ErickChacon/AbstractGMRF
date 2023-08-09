@@ -1,4 +1,4 @@
-module AbstractGMRFs
+module GMRFs
 
 using Meshes
 import SparseArrays: sparse, sparsevec, spdiagm, spzeros

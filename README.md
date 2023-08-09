@@ -1,4 +1,4 @@
-# AbstractGMRFs
+# GMRFs
 Implementation of GMRF for spatial analysis
 
 
