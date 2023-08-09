@@ -144,7 +144,7 @@ function difference(g::SimpleGraph; order = 1)
             repeat([1, -1], inner = length(In))
         )
     else
-        return structure(g; order = order - 1)
+        return -structure(g; order = order - 1)
     end
 
     throw(ErrorException("not implemented"))
