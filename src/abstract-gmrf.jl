@@ -1,13 +1,31 @@
 """
-    AbstractGMRF(S, κ)
+    AbstractGMRF
 
-Construct a Gaussian Markov random field  with zero mean and precision matrix `Q = κS`.
+Sypertype of Gaussian Markov random fields with mean `μ` and precison matrix `Q = κS`,
+where `S` is the structure matrix and `κ` the scale parameter.
 """
 abstract type AbstractGMRF <: Distributions.ContinuousMultivariateDistribution end
 
-# function Base.length end
-# function structure end
-# function scale end
+"""
+    length(x::AbstractGMRF)
+
+Return the sampling dimension of the GMRF `x`.
+"""
+Base.length(x::AbstractGMRF)
+
+"""
+    scale(x::AbstractGMRF)
+
+Return the scale parameter of the GMRF `x`.
+"""
+Distribution.scale(x::AbstractGMRF)
+
+"""
+    structure(x::AbstractGMRF)
+
+Returns the structure matrix of the GMRF `x`.
+"""
+function structure end
 
 ## Random generator
 
@@ -35,7 +53,7 @@ function LinearAlgebra.:\(L::SuiteSparse.CHOLMOD.FactorComponent,
     reshape(Matrix(L \ SuiteSparse.CHOLMOD.Dense(b)), length(b))
 end
 
-## Logpdf
+## Logarithm of the pdf
 
 function Distributions._logpdf(d::AbstractGMRF, x::AbstractVector{<:Real})
     n = length(d)
@@ -75,7 +93,7 @@ end
     return logpdf .+ lpdf
 end
 
-# Methods for abstractgmrf subtypes as gmrf, rgmrf, cgmrf, ggmrf.
+## GMRF implementations
 
 for filename in ["gmrf.jl", "rgmrf.jl", "cgmrf.jl", "ggmrf.jl"]
     include(joinpath("gmrf", filename))
