@@ -18,7 +18,7 @@ Base.length(x::AbstractGMRF)
 
 Return the scale parameter of the GMRF `x`.
 """
-Distribution.scale(x::AbstractGMRF)
+Distributions.scale(x::AbstractGMRF)
 
 """
     structure(x::AbstractGMRF)

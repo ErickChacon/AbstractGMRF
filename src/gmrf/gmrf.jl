@@ -8,6 +8,6 @@ struct GMRF <: AbstractGMRF
     κ::Real
 end
 
-Base.length(d::GMRF) = size(d.S, 1)
-structure(d::GMRF) = d.S
-scale(d::GMRF) = d.κ
+Base.length(x::GMRF) = size(x.S, 1)
+structure(x::GMRF) = x.S
+scale(x::GMRF) = x.κ
