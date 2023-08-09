@@ -9,12 +9,11 @@ import Random: AbstractRNG, randn!
 import LinearAlgebra: cholesky, ldiv!, I, LinearAlgebra
 import Graphs: Graphs, SimpleGraph, edges
 
-include("adjacency.jl")
-include("structure-matrix.jl")
-include("gmrf.jl")
-# include("igmrf.jl")
+include("utils.jl")
+include("abstract-gmrf.jl")
+# include("abstract-igmrf.jl")
 
 export GMRF, RGMRF, CGMRF, GGMRF
 export adjacency, structure, scale
 
-end # module GMRF
+end # module GMRFs
