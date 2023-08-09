@@ -64,3 +64,21 @@ function adjacency2(g::CartesianGrid{2}; order::Int = 1, cyclic::Bool = false)
     A = sparse(vcat(Ir, It), vcat(Jr, Jt), true, n, n)
     A .| A'
 end
+
+function adjacency(d::GeometrySet)
+    n = length(d)
+    rows = Int64[]
+    cols = Int64[]
+
+    for i = 1:n
+        for j = (i+1):n
+            if hasintersect(d[i], d[j])
+                push!(rows, i)
+                push!(cols, j)
+            end
+        end
+    end
+
+    A = sparse(rows, cols, true, n, n)
+    A + A'
+end

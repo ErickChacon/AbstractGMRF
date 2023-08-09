@@ -77,7 +77,7 @@ end
 
 # Methods for abstractgmrf subtypes as gmrf, rgmrf, cgmrf, ggmrf.
 
-for filename in ["gmrf.jl", "rgmrf.jl", "cgmrf.jl"]
+for filename in ["gmrf.jl", "rgmrf.jl", "cgmrf.jl", "ggmrf.jl"]
     include(joinpath("gmrf", filename))
 end
 
