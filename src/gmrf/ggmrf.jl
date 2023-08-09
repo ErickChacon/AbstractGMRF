@@ -1,17 +1,18 @@
 """
-    GGMRF(grid, order, δ, κ)
+    GGMRF(g::SimpleGraph, order::Integer, δ::Real, κ::Real)
 
-Regular Gaussian Markov random field with n-th order, δ as and κ as precision.
+Gaussian Markov random field over the graph `g` with scale parameter `κ` and structure
+matrix defined by the penalty of n-th `order` and `δ` parameter.
 """
 struct GGMRF <: AbstractGMRF
     g::SimpleGraph
     order::Integer
-    δ::Number
+    δ::Real
     κ::Real
 end
 
-GGMRF(m::GeometrySet, order::Integer, δ::Number, κ::Real) = GGMRF(SimpleGraph(adjacency(m)), order, δ, κ)
+GGMRF(d::GeometrySet, order::Integer, δ::Real, κ::Real) = GGMRF(SimpleGraph(adjacency(d)), order, δ, κ)
 
-Base.length(d::GGMRF) = Graphs.nv(d.g)
-structure(d::GGMRF) = structure(d.g; δ = d.δ, order = d.order)
-scale(d::GGMRF) = d.κ
+Base.length(x::GGMRF) = Graphs.nv(x.g)
+structure(x::GGMRF) = structure(x.g; δ = x.δ, order = x.order)
+scale(x::GGMRF) = x.κ

@@ -1,15 +1,16 @@
 """
-    RGMRF(grid, order, δ, κ)
+    RGMRF(g::CartesianGrid, order::Integer, δ::Real, κ::Real)
 
-Regular Gaussian Markov random field with n-th order, δ as and κ as precision.
+Regular Gaussian Markov random field over regular grid `g` with scale parameter `κ` and structure
+matrix defined by the penalty of n-th `order` and `δ` parameter.
 """
 struct RGMRF <: AbstractGMRF
-    grid::CartesianGrid
+    g::CartesianGrid
     order::Integer
-    δ::Number
+    δ::Real
     κ::Real
 end
 
-Base.length(d::RGMRF) = nelements(d.grid)
-structure(d::RGMRF) = structure(d.grid; δ = d.δ, order = d.order, cyclic = false)
-scale(d::RGMRF) = d.κ
+Base.length(x::RGMRF) = nelements(x.g)
+scale(x::RGMRF) = x.κ
+structure(x::RGMRF) = structure(x.g; δ = x.δ, order = x.order, cyclic = false)
