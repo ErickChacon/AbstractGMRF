@@ -8,6 +8,11 @@ struct GMRF <: AbstractGMRF
     κ::Real
 end
 
+GMRF(g::SimpleGraph, order::Integer, δ::Real, κ::Real) = GMRF(structure(g; δ = δ, order = order), κ)
+
+GMRF(g::CartesianGrid, order::Integer, δ::Real, κ::Real; cyclic = false) =
+    GMRF(structure(g; δ = δ, order = order, cyclic = cyclic), κ)
+
 Base.length(x::GMRF) = size(x.S, 1)
 scale(x::GMRF) = x.κ
 structure(x::GMRF) = x.S

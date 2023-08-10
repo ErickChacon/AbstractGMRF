@@ -93,6 +93,16 @@ end
     return logpdf .+ lpdf
 end
 
+## IO
+
+Base.show(io::IO, g::AbstractGMRF) = print(io, "$(length(g)) GMRF")
+
+function Base.show(io::IO, ::MIME"text/plain", g::AbstractGMRF)
+    println(io, g)
+    println(io, "  S: ", summary(structure(g)))
+    print(io, "  κ: ", scale(g))
+end
+
 ## GMRF implementations
 
 for filename in ["gmrf.jl", "rgmrf.jl", "cgmrf.jl", "ggmrf.jl"]

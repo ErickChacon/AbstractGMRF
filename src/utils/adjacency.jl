@@ -82,3 +82,5 @@ function adjacency(d::GeometrySet)
     A = sparse(rows, cols, true, n, n)
     A + A'
 end
+
+adjacency(g::SimpleGraph) = adjacency_matrix(g)
