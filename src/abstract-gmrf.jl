@@ -27,6 +27,9 @@ Returns the structure matrix of the GMRF `x`.
 """
 function structure end
 
+precision(x::AbstractGMRF) = scale(x) * structure(x)
+
+
 ## Random generator
 
 function Distributions._rand!(rng::AbstractRNG, d::AbstractGMRF, x::AbstractVector{T}) where T<:Real
