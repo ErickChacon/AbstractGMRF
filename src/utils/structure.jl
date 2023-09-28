@@ -21,7 +21,7 @@ circulant precision matrix of a GMRF or IGMRF. An additional paramater δ can be
 such as S = D'D + δ*I, where D is a difference matrix.
 """
 function structure_base(g::CartesianGrid{1}; δ = 0, order = 1)
-    n = g.dims[1]
+    n = size(g)
     base = zeros(n)
     if order == 1
         base[[1, 2, end]] = [2 + δ, -1, -1]
@@ -34,7 +34,7 @@ function structure_base(g::CartesianGrid{1}; δ = 0, order = 1)
 end
 
 function structure_base(g::CartesianGrid{2}; δ = 0, order = 1)
-    (n1, n2) = g.dims
+    (n1, n2) = size(g)
     n = n1 * n2
     base = zeros(n2, n1)
     if order == 1
