@@ -141,7 +141,7 @@ function difference(g::SimpleGraph; order = 1)
         return sparse(
             repeat(1:length(In), 2),
             vcat(In, Jn),
-            repeat([1, -1], inner = length(In))
+            repeat([-1, 1], inner = length(In))
         )
     else
         return -structure(g; order = order - 1)
