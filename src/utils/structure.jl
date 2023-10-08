@@ -34,31 +34,13 @@ function structure_base(g::CartesianGrid{1}; δ = 0, order = 1)
 end
 
 function structure_base(g::CartesianGrid{2}; δ = 0, order = 1)
-    (n1, n2) = size(g)
-    n = n1 * n2
-    base = zeros(n2, n1)
     if order == 1
-        base[1, 1] = 4 + δ
-        base[1, 2] = -1
-        base[2, 1] = -1
-        base[1, end] = -1
-        base[end, 1] = -1
-    elseif order == 2
-        base[1, 1] = 20 + δ
-        base[1, 2] = -8
-        base[2, 1] = -8
-        base[1, end] = -8
-        base[end, 1] = -8
-        base[2, 2] = 2
-        base[2, end] = 2
-        base[end, 2] = 2
-        base[end, end] = 2
-        base[1, 3] = 1
-        base[3, 1] = 1
-        base[1, end-1] = 1
-        base[end-1, 1] = 1
-    else
-        throw(ErrorException("not implemented"))
+        (n1, n2) = size(g)
+        base = sparse([1, 1, 2, 1, n2], [1, 2, 1, n1, 1], [4.0, -1, -1, -1, -1])
+    elseif order > 1
+        w = centered(sparse([0 -1 0; -1 4.0 -1; 0 -1 0]))
+        base = imfilter(structure_base(g; δ = 0, order = order - 1), w, "circular")
     end
+    base[1,1] += δ
     base
 end

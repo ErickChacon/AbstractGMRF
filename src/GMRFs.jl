@@ -8,6 +8,7 @@ import Distributions: InverseGamma, Gamma, Distributions
 import Random: AbstractRNG, randn!
 import LinearAlgebra: cholesky, ldiv!, I, LinearAlgebra
 import Graphs: Graphs, SimpleGraph, edges, ne, adjacency_matrix
+import ImageFiltering: imfilter, centered
 
 include("utils.jl")
 include("abstract-gmrf.jl")
