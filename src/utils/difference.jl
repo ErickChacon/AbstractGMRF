@@ -55,7 +55,7 @@ function difference(g::CartesianGrid{2}; order = 1, cyclic = false)
         return sparse(
             repeat(1:(length(Ir) + length(It)), 2),
             vcat(Ir, It, Jr, Jt),
-            repeat([1, -1], inner = length(Ir) + length(It))
+            repeat([-1, 1], inner = length(Ir) + length(It))
            )
     end
 
@@ -133,21 +133,23 @@ function difference(g::CartesianGrid{2}; order = 1, cyclic = false)
 end
 
 function difference(g::SimpleGraph; order = 1)
-    n = length(Graphs.vertices(g))
 
     if order == 1
+        n = ne(g)
         In = [e.src for e in edges(g)]
         Jn = [e.dst for e in edges(g)]
         return sparse(
-            repeat(1:length(In), 2),
+            repeat(1:n, 2),
             vcat(In, Jn),
-            repeat([-1, 1], inner = length(In))
+            repeat([-1, 1], inner = n)
         )
+    elseif order == 2
+        D = difference(g)
+        return -D'D
     else
-        return -structure(g; order = order - 1)
+        throw(ErrorException("not implemented"))
     end
 
-    throw(ErrorException("not implemented"))
 end
 
 
