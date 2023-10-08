@@ -21,15 +21,13 @@ circulant precision matrix of a GMRF or IGMRF. An additional paramater δ can be
 such as S = D'D + δ*I, where D is a difference matrix.
 """
 function structure_base(g::CartesianGrid{1}; δ = 0, order = 1)
-    n = size(g)
-    base = zeros(n)
     if order == 1
-        base[[1, 2, end]] = [2 + δ, -1, -1]
-    elseif order == 2
-        base[[1, 2, 3, end-1, end]] = [6 + δ, -4, 1, 1, -4]
-    else
-        throw(ErrorException("not implemented"))
+        base = sparsevec([1, 2, length(g)], [2.0, -1, -1])
+    elseif order > 1
+        w = centered([-1, 2, -1])
+        base = imfilter(structure_base(g, order = order - 1), w, "circular")
     end
+    base[1,1] += δ
     base
 end
 
@@ -39,7 +37,7 @@ function structure_base(g::CartesianGrid{2}; δ = 0, order = 1)
         base = sparse([1, 1, 2, 1, n2], [1, 2, 1, n1, 1], [4.0, -1, -1, -1, -1])
     elseif order > 1
         w = centered(sparse([0 -1 0; -1 4.0 -1; 0 -1 0]))
-        base = imfilter(structure_base(g; δ = 0, order = order - 1), w, "circular")
+        base = imfilter(structure_base(g, order = order - 1), w, "circular")
     end
     base[1,1] += δ
     base
