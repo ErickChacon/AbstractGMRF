@@ -5,8 +5,13 @@ IGMRF. An additional paramater δ can be defined such as S = D'D + δ*I, where D
 difference matrix.
 """
 function structure(g::CartesianGrid; δ = 0, order = 1, cyclic = false)
-    D = difference(g, order = order, cyclic = cyclic)
-    D'D + δ * I
+    D₁ = difference(g, cyclic = cyclic)
+    if order == 1
+        S = D₁'D₁
+    elseif order > 1
+        S = D₁'D₁ * structure(g, order = order - 1, cyclic = cyclic)
+    end
+    S + δ * I
 end
 
 function structure(g::SimpleGraph; δ = 0, order = 1)
