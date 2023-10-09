@@ -12,11 +12,11 @@ end
 function structure(g::SimpleGraph; δ = 0, order = 1)
     D₁ = difference(g, order = 1)
     if order == 1
-        Q = D₁'D₁
+        S = D₁'D₁
     elseif order > 1
-        Q = D₁'D₁ * structure(g, order = order - 1)
+        S = D₁'D₁ * structure(g, order = order - 1)
     end
-    Q + δ * I
+    S + δ * I
 end
 
 """
