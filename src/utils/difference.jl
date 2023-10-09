@@ -76,7 +76,7 @@ function difference(g::CartesianGrid{2}; order = 1, cyclic = false)
            )
     end
 
-    # TODO: need improvement and test
+    # TODO: need improvement?
     if order == 2 && !cyclic
         # inside cells
         Ir = [ij_to_k(i, j, n1, n2) for i = 2:(n1-1) for j = 2:(n2-1)]

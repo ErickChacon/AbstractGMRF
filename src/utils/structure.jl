@@ -10,13 +10,18 @@ function structure(g::CartesianGrid; δ = 0, order = 1, cyclic = false)
 end
 
 function structure(g::SimpleGraph; δ = 0, order = 1)
-    D = difference(g, order = order)
-    D'D + δ * I
+    D₁ = difference(g, order = 1)
+    if order == 1
+        Q = D₁'D₁
+    elseif order > 1
+        Q = D₁'D₁ * structure(g, order = order - 1)
+    end
+    Q + δ * I
 end
 
 """
 Return the base of a structure matrix (S) of specified `order` associated to a
-`CartesianGrid. The base of a structure matrix is defined such as Q = κS, where `Q` is the
+`CartesianGrid`. The base of a structure matrix is defined such as Q = κS, where `Q` is the
 circulant precision matrix of a GMRF or IGMRF. An additional paramater δ can be defined
 such as S = D'D + δ*I, where D is a difference matrix.
 """
