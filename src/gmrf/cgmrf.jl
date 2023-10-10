@@ -13,7 +13,7 @@ end
 
 Base.length(d::CGMRF) = nelements(d.g)
 scale(d::CGMRF) = d.κ
-structure(d::CGMRF) = structure(d.g; δ = d.δ, order = d.order, cyclic = true)
+structure(d::CGMRF) = structure(d.g; δ = d.δ, order = d.order, circular = true)
 structure_base(d::CGMRF) = structure_base(d.g; δ = d.δ, order = d.order)
 
 
