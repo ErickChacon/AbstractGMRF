@@ -1,8 +1,16 @@
 """
-Return the structure matrix (S) of specified `order` associated to a `CartesianGrid`. The
-structure matrix is defined such as Q = κS, where `Q` is the precision matrix of a GMRF or
-IGMRF. An additional paramater δ can be defined such as S = D'D + δ*I, where D is a
-difference matrix.
+    structure(d; δ = 0, order = 1, circular = false)
+
+Return a sparse `n×n` structure matrix S for a domain `d`, where `n` represents the
+domain's size.
+
+The structure matrix is proportional to the precision matrix (`Q = κS`) of a Gaussian
+Markov Random Field (GMRF). It is also related to the difference matrix (`S = D'D`), which
+is used to define a GMRF through conditional increments. Higher `order` will lead to a
+smoother GMRF. An optional paramater `δ` can be defined such as `S = D'D + δ*I`, where D
+represents the difference matrix. Supported domain types include `CartesianGrid` and
+`SimpleGraph`, with an option for CartesianGrid to treat the grid as circular (`circular =
+true`), allowing neighbors to wrap around the grid's edges like a toroidal topology.
 """
 function structure(g::CartesianGrid; δ = 0, order = 1, circular = false)
     D₁ = difference(g, circular = circular)
@@ -25,10 +33,15 @@ function structure(g::SimpleGraph; δ = 0, order = 1)
 end
 
 """
-Return the base of a structure matrix (S) of specified `order` associated to a
-`CartesianGrid`. The base of a structure matrix is defined such as Q = κS, where `Q` is the
-circulant precision matrix of a GMRF or IGMRF. An additional paramater δ can be defined
-such as S = D'D + δ*I, where D is a difference matrix.
+    structure_base(d::CartesianGrid; δ = 0, order = 1)
+
+Return a sparse base matrix S for a Cartesian grid `d`, assuming a circular neighboring
+structure where neighbors wrap around the grid's edges in a toroidal fashion.
+
+Due to the circular topology, the resulting structure matrix is circulant, obviating the
+need for a full structure matrix computation, and instead focusing on the base of this
+circulant matrix. Optional parameters `δ` and `order` are supported, offering the same
+interpretation as in the `structure` matrix.
 """
 function structure_base(g::CartesianGrid{1}; δ = 0, order = 1)
     if order == 1
