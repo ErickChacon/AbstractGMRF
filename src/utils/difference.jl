@@ -3,23 +3,23 @@ Return the difference matrix (D) of specified `order` associated to `CartesianGr
 difference matrix is defined such as Q = κD'D, where `Q` is the precision matrix of a GMRF
 or IGMRF. The matrix D defines the increments of an specified `order`. Higher `order` will lead to smoother GMRF.
 """
-function difference(g::CartesianGrid{1}; order = 1, cyclic = false)
+function difference(g::CartesianGrid{1}; order = 1, circular = false)
     n = nelements(g)
 
-    if order == 1 && !cyclic
+    if order == 1 && !circular
         return spdiagm(n-1, n, 0 => fill(-1, n-1), 1 => fill(1, n-1))
     end
 
-    if order == 1 && cyclic
+    if order == 1 && circular
         return spdiagm(0 => fill(-1, n), 1 => fill(1, n-1), -(n-1) => fill(1, 1))
     end
 
-    if order == 2 && !cyclic
+    if order == 2 && !circular
         return spdiagm(n-2, n,
                        0 => fill(1, n-2), 1 => fill(-2, n-2), 2 => fill(1, n-2))
     end
 
-    if order == 2 && cyclic
+    if order == 2 && circular
         return spdiagm(0 => fill(1, n), 1 => fill(-2, n-1), 2 => fill(1, n-2),
                        -(n-2) => fill(1, 2), -(n-1) => fill(-2, 1))
     end
@@ -27,7 +27,7 @@ function difference(g::CartesianGrid{1}; order = 1, cyclic = false)
     throw(ErrorException("not implemented"))
 end
 
-function difference(g::CartesianGrid{2}; order = 1, cyclic = false)
+function difference(g::CartesianGrid{2}; order = 1, circular = false)
     n1, n2 = size(g)
     n = nelements(g)
 
@@ -37,7 +37,7 @@ function difference(g::CartesianGrid{2}; order = 1, cyclic = false)
     end
 
     if order == 1
-        if cyclic
+        if circular
             # neighbors to the right (→)
             Ir = [ij_to_k(i, j, n1, n2) for i = 1:n1 for j = 1:n2]
             Jr = [ij_to_k(mod1(i + 1, n1), j, n1, n2) for i = 1:n1 for j = 1:n2]
@@ -59,7 +59,7 @@ function difference(g::CartesianGrid{2}; order = 1, cyclic = false)
            )
     end
 
-    if order == 2 && cyclic
+    if order == 2 && circular
         Ir = [ij_to_k(i, j, n1, n2) for i = 1:n1 for j = 1:n2]
         # neighbors to the right (→)
         Jr = [ij_to_k(mod1(i + 1, n1), j, n1, n2) for i = 1:n1 for j = 1:n2]
@@ -77,7 +77,7 @@ function difference(g::CartesianGrid{2}; order = 1, cyclic = false)
     end
 
     # TODO: need improvement?
-    if order == 2 && !cyclic
+    if order == 2 && !circular
         # inside cells
         Ir = [ij_to_k(i, j, n1, n2) for i = 2:(n1-1) for j = 2:(n2-1)]
         Jir = [ij_to_k(i + 1, j, n1, n2) for i = 2:(n1-1) for j = 2:(n2-1)]

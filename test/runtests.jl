@@ -5,7 +5,12 @@ using SparseArrays
 using LinearAlgebra
 using Graphs
 
-xxt(x::SparseMatrixCSC) = x .| x'
+# custom functions
+
+xoxt(x::SparseMatrixCSC) = x .| x'
+xpxt(x::SparseMatrixCSC) = x + x'
+
+# run tests
 
 files = ["utils.jl"]
 

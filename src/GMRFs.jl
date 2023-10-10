@@ -15,6 +15,6 @@ include("abstract-gmrf.jl")
 # include("abstract-igmrf.jl")
 
 export GMRF, RGMRF, CGMRF, GGMRF
-export adjacency, structure, scale
+export structure, scale
 
 end # module GMRFs

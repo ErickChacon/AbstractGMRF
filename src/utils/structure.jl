@@ -4,12 +4,12 @@ structure matrix is defined such as Q = κS, where `Q` is the precision matrix o
 IGMRF. An additional paramater δ can be defined such as S = D'D + δ*I, where D is a
 difference matrix.
 """
-function structure(g::CartesianGrid; δ = 0, order = 1, cyclic = false)
-    D₁ = difference(g, cyclic = cyclic)
+function structure(g::CartesianGrid; δ = 0, order = 1, circular = false)
+    D₁ = difference(g, circular = circular)
     if order == 1
         S = D₁'D₁
     elseif order > 1
-        S = D₁'D₁ * structure(g, order = order - 1, cyclic = cyclic)
+        S = D₁'D₁ * structure(g, order = order - 1, circular = circular)
     end
     S + δ * I
 end
