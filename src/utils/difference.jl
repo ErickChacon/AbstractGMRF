@@ -1,7 +1,13 @@
 """
-Return the difference matrix (D) of specified `order` associated to `CartesianGrid. The
-difference matrix is defined such as Q = κD'D, where `Q` is the precision matrix of a GMRF
-or IGMRF. The matrix D defines the increments of an specified `order`. Higher `order` will lead to smoother GMRF.
+    difference(d, order = 1, circular = false)
+
+Return a sparse `d×n` difference matrix D for a domain `d`, where `n` represents the
+domain's size and `d` is the number of differences (restrictions or increments).
+
+Each row in D has coefficients that define the restrictions of specified `order`  with
+respect to the `n` elements. Supported domain types include `CartesianGrid` or
+`SimpleGraph`, with an option for CartesianGrid to treat the grid as circular (`circular =
+true`), allowing neighbors to wrap around the grid's edges like a toroidal topology.
 """
 function difference(g::CartesianGrid{1}; order = 1, circular = false)
     n = nelements(g)
