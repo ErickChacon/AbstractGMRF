@@ -11,7 +11,7 @@ import Graphs: Graphs, SimpleGraph, edges, ne, adjacency_matrix
 import ImageFiltering: imfilter, centered
 
 include("utils.jl")
-include("abstract-gmrf.jl")
+include("gmrf.jl")
 # include("abstract-igmrf.jl")
 
 export GMRF, RGMRF, CGMRF, GGMRF
