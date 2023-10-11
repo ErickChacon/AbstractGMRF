@@ -98,12 +98,12 @@ end
 
 ## IO
 
-Base.show(io::IO, g::AbstractGMRF) = print(io, "$(length(g)) GMRF")
+Base.show(io::IO, d::AbstractGMRF) = print(io, "$(length(d)) GMRF")
 
-function Base.show(io::IO, ::MIME"text/plain", g::AbstractGMRF)
-    println(io, g)
-    println(io, "  S: ", summary(structure(g)))
-    print(io, "  κ: ", scale(g))
+function Base.show(io::IO, ::MIME"text/plain", d::AbstractGMRF)
+    println(io, d)
+    println(io, "  S: ", summary(structure(d)))
+    print(io, "  κ: ", scale(d))
 end
 
 ## GMRF implementations

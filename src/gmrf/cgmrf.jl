@@ -125,3 +125,10 @@ end
 end
 
 
+## IO
+
+function Base.show(io::IO, ::MIME"text/plain", d::CGMRF)
+    println(io, d)
+    println(io, "  S base: ", summary(structure_base(d)))
+    print(io, "  κ: ", scale(d))
+end
