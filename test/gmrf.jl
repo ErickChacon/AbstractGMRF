@@ -1,9 +1,9 @@
 @testset "GMRF 1D" begin
 
-    n = 10
-    order = [1, 2]
-    kappa = [100, 100]
-    δ = [0.0001, 1]
+    n = 100
+    order = [1, 2, 3]
+    kappa = [8, 5, 25]
+    δ = [0.01, 0.01, 0.001]
     grid = CartesianGrid(n)
 
     for i = 1:length(order)
@@ -28,10 +28,10 @@ end
 
 @testset "GMRF 2D" begin
 
-    n1, n2 = 7, 9
-    order = [1, 2]
-    kappa = [100, 100]
-    δ = [0.0001, 1]
+    n1, n2 = 10, 13
+    order = [1, 2, 3]
+    kappa = [1, 1, 7]
+    δ = [0.01, 0.01, 0.001]
     grid = CartesianGrid(n1,n2)
 
     for i = 1:length(order)
