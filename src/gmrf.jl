@@ -91,7 +91,7 @@ end
     chol = cholesky(structure(d))
     logpdf = -0.5 * n * log(2.0 * pi)
     logpdf += 0.5 * (n * log(scale(d)) + LinearAlgebra.logdet(chol))
-    lpdf = @inbounds map(xi -> -0.5 * scale(d) * xi' * structure(d) * xg,
+    lpdf = @inbounds map(xi -> -0.5 * scale(d) * xi' * structure(d) * xi,
                Distributions.eachvariate(x, Distributions.variate_form(typeof(d))))
     return logpdf .+ lpdf
 end
