@@ -14,9 +14,3 @@ Implementation of GMRF for spatial analysis.
 ## Graphs
 
 ![graphs](figures/03-graph.png)
-
-## Todo
-
-- [ ] `GCMRF`:
-    - [ ] Reparametrize the `struct` using the `base` of the precision matrix.
-    - [ ] Finish implementation of `logpdf!` using `DFT` and `IDFT`.
