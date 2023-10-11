@@ -4,6 +4,7 @@ using Meshes
 using SparseArrays
 using LinearAlgebra
 using Graphs
+using Distributions
 
 # Custom functions
 
@@ -12,7 +13,7 @@ xpxt(x::SparseMatrixCSC) = x + x'
 
 # Run tests
 
-files = ["utils.jl"]
+files = ["utils.jl", "gmrf.jl"]
 
 for file in files
     include(file)
