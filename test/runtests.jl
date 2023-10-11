@@ -3,7 +3,7 @@ using Test
 using Meshes
 using SparseArrays
 using LinearAlgebra
-using Graphs
+import Graphs
 using Distributions
 
 # Custom functions
@@ -14,6 +14,7 @@ xpxt(x::SparseMatrixCSC) = x + x'
 # Run tests
 
 files = ["utils.jl", "gmrf.jl"]
+# files = ["utils.jl"]
 
 for file in files
     include(file)
