@@ -5,23 +5,27 @@ Circulant Gaussian Markov random field over the regular grid `g` with scale para
 matrix defined by the penalty of n-th `order` and `δ` parameter.
 """
 struct CGMRF <: AbstractGMRF
-    g::CartesianGrid
-    order::Integer
-    δ::Number
-    κ::Number
+    base::AbstractMatrix
+    κ::Real
 end
 
-Base.length(d::CGMRF) = nelements(d.g)
-scale(d::CGMRF) = d.κ
-structure(d::CGMRF) = structure(d.g; δ = d.δ, order = d.order, circular = true)
-structure_base(d::CGMRF) = structure_base(d.g; δ = d.δ, order = d.order)
+# Constructors
 
+CGMRF(domain::CartesianGrid, order::Integer, κ::Real, δ::Real) =
+    CGMRF(structure_base(domain; order = order, δ = δ), κ)
+
+# Methods
+
+Base.length(d::CGMRF) = length(d.base)
+scale(d::CGMRF) = d.κ
+structure_base(d::CGMRF) = d.base
+# structure(d::CGMRF) = structure(d.g; δ = d.δ, order = d.order, circular = true)
 
 ## Random generator
 
 function Distributions._rand!(rng::AbstractRNG, d::CGMRF, x::AbstractVector{T}) where T<:Real
     # get dimensions
-    dims = size(d.g)
+    dims = reverse(size(structure_base(d)))
     n = prod(dims)
 
     # compute eigenvalues
@@ -41,7 +45,7 @@ function Distributions._rand!(rng::AbstractRNG, d::CGMRF, x::AbstractVector{T}) 
 end
 
 function Distributions._rand!(rng::AbstractRNG, d::CGMRF, x::AbstractArray{<:Real})
-    dims = size(d.g)
+    dims = reverse(size(structure_base(d)))
     n = prod(dims)
     λ = FFTW.fft(structure_base(d))
     @inbounds for xi in Distributions.eachvariate(x, Distributions.variate_form(typeof(d)))
@@ -60,7 +64,7 @@ end
 
 function Distributions._logpdf(d::CGMRF, x::AbstractVector{<:Real})
     # get dimensions
-    dims = size(d.g)
+    dims = reverse(size(structure_base(d)))
     n = prod(dims)
 
     # compute eigenvalues
@@ -100,7 +104,7 @@ end
             throw(DimensionMismatch("inconsistent array dimensions"))
     end
 
-    dims = size(d.g)
+    dims = reverse(size(structure_base(d)))
     n = prod(dims)
     base = structure_base(d)
     λ = FFTW.fft(base)
