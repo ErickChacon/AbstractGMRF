@@ -1,7 +1,21 @@
 """
     GMRF(S::AbstractMatrix, κ::Real)
 
-Construct a Gaussian Markov random field  with zero mean and precision matrix `Q = κS`.
+Construct a Gaussian Markov random field (GMRF)  with zero mean and precision matrix `Q =
+κS`.
+
+    GMRF(d, order::Integer, κ::Real, δ::Real; circular = false)
+
+Construct a Gaussian Markov random field (GMRF) over domain `d`.
+
+The precision matrix `Q` of the GMRF is determined as `κS`, with `κ` serving as the
+scaling parameter. The structure matrix `S` is computed using `S = D'D + δI`, where `D`
+represents the difference matrix, with its calculation dependent on the order specified
+for the penalty or increments used to define the GMRF. The parameter `δ` is introduced to
+address positive definiteness issues within the precision matrix. Notably, higher values
+of `δ` result in a faster correlation decay, a higher `order` yields smoother processes,
+and a greater `κ` leads to reduced process variance. This GMRF construction is applicable
+to diverse domains, including `CartesianGrid`, `GeometrySet`, and `SimpleGraph`.
 """
 struct GMRF <: AbstractGMRF
     S::AbstractMatrix
