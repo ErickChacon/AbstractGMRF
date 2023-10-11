@@ -1,8 +1,20 @@
 """
-    CGMRF(g::CartesianGrid, order::Integer, δ::Real, κ::Real)
+    CGMRF(base::AbstractMatrix, κ::Real)
 
-Circulant Gaussian Markov random field over the regular grid `g` with scale parameter `κ` and structure
-matrix defined by the penalty of n-th `order` and `δ` parameter.
+Construct a Gaussian Markov random field (GMRF) with zero mean and block `circulant`
+precision matrix with specified `base` and scale parameter `κ`.
+
+    CGMRF(domain::CartesianGrid, order::Integer, κ::Real, δ::Real)
+
+Construct a Gaussian Markov random field (GMRF) over specified `domain`.
+
+The precision matrix the circulant GMRF is determined as `κS`, with `κ` serving as the
+scaling parameter. The structure matrix `S` is computed using `S = D'D + δI`, where `D`
+represents the difference matrix assuming circular neighboring topology depending of
+selected `order`. The parameter `δ` is introduced to address positive definiteness issues
+within the precision matrix. Notably, higher values of `δ` result in a faster correlation
+decay, a higher `order` yields smoother processes, and a greater `κ` leads to reduced
+process variance. This GMRF construction is applicable only to `CartesianGrid`s.
 """
 struct CGMRF <: AbstractGMRF
     base::AbstractMatrix
