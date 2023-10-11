@@ -17,7 +17,7 @@ decay, a higher `order` yields smoother processes, and a greater `κ` leads to r
 process variance. This GMRF construction is applicable only to `CartesianGrid`s.
 """
 struct CGMRF <: AbstractGMRF
-    base::AbstractMatrix
+    base::AbstractArray
     κ::Real
 end
 
@@ -84,7 +84,11 @@ function Distributions._logpdf(d::CGMRF, x::AbstractVector{<:Real})
     λ = FFTW.fft(base)
 
     # compute u: vec(u) = S * vec(x)
-    xmat = reverse(transpose(reshape(x, dims)), dims = 1)
+    if length(dims) == 2
+        xmat = reverse(transpose(reshape(x, dims)), dims = 1)
+    else
+        xmat = x
+    end
     u = FFTW.fft(λ .* FFTW.ifft(xmat))
 
     # compute likelihood
@@ -122,7 +126,11 @@ end
     λ = FFTW.fft(base)
 
     function auxfun(xi)
-        xmat = reverse(transpose(reshape(xi, dims)), dims = 1)
+        if length(dims) == 2
+            xmat = reverse(transpose(reshape(xi, dims)), dims = 1)
+        else
+            xmat = xi
+        end
         u = FFTW.fft(λ .* FFTW.ifft(xmat))
         sum(xmat .* u)
     end
