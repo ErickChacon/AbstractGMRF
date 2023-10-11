@@ -4,9 +4,9 @@
 Construct a Gaussian Markov random field (GMRF)  with zero mean and precision matrix `Q =
 κS`.
 
-    GMRF(d, order::Integer, κ::Real, δ::Real; circular = false)
+    GMRF(domain, order::Integer, κ::Real, δ::Real; circular = false)
 
-Construct a Gaussian Markov random field (GMRF) over domain `d`.
+Construct a Gaussian Markov random field (GMRF) over specified `domain`.
 
 The precision matrix `Q` of the GMRF is determined as `κS`, with `κ` serving as the
 scaling parameter. The structure matrix `S` is computed using `S = D'D + δI`, where `D`
@@ -24,16 +24,16 @@ end
 
 # Constructors
 
-GMRF(d::CartesianGrid, order::Integer, κ::Real, δ::Real; circular = false) =
-    GMRF(structure(d; δ = δ, order = order, circular = circular), κ)
+GMRF(domain::CartesianGrid, order::Integer, κ::Real, δ::Real; circular = false) =
+    GMRF(structure(domain; δ = δ, order = order, circular = circular), κ)
 
-GMRF(d::SimpleGraph, order::Integer, κ::Real, δ::Real) =
-    GMRF(structure(d; δ = δ, order = order), κ)
+GMRF(domain::SimpleGraph, order::Integer, κ::Real, δ::Real) =
+    GMRF(structure(domain; δ = δ, order = order), κ)
 
-GMRF(d::GeometrySet, order::Integer, κ::Real, δ::Real) = GMRF(SimpleGraph(adjacency(d)), order, κ, δ)
+GMRF(domain::GeometrySet, order::Integer, κ::Real, δ::Real) = GMRF(SimpleGraph(adjacency(domain)), order, κ, δ)
 
 # Methods
 
-Base.length(x::GMRF) = size(x.S, 1)
-scale(x::GMRF) = x.κ
-structure(x::GMRF) = x.S
+Base.length(d::GMRF) = size(d.S, 1)
+scale(d::GMRF) = d.κ
+structure(d::GMRF) = d.S

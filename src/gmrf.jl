@@ -7,27 +7,27 @@ where `S` is the structure matrix and `κ` the scale parameter.
 abstract type AbstractGMRF <: Distributions.ContinuousMultivariateDistribution end
 
 """
-    length(x::AbstractGMRF)
+    length(d::AbstractGMRF)
 
-Return the sampling dimension of the GMRF `x`.
+Return the sampling dimension of the GMRF `d`.
 """
-Base.length(x::AbstractGMRF)
-
-"""
-    scale(x::AbstractGMRF)
-
-Return the scale parameter of the GMRF `x`.
-"""
-Distributions.scale(x::AbstractGMRF)
+Base.length(d::AbstractGMRF)
 
 """
-    structure(x::AbstractGMRF)
+    scale(d::AbstractGMRF)
 
-Returns the structure matrix of the GMRF `x`.
+Return the scale parameter of the GMRF `d`.
+"""
+Distributions.scale(d::AbstractGMRF)
+
+"""
+    structure(d::AbstractGMRF)
+
+Returns the structure matrix of the GMRF `d`.
 """
 function structure end
 
-precision(x::AbstractGMRF) = scale(x) * structure(x)
+precision(d::AbstractGMRF) = scale(d) * structure(d)
 
 
 ## Random generator
@@ -91,7 +91,7 @@ end
     chol = cholesky(structure(d))
     logpdf = -0.5 * n * log(2.0 * pi)
     logpdf += 0.5 * (n * log(scale(d)) + LinearAlgebra.logdet(chol))
-    lpdf = @inbounds map(xi -> -0.5 * scale(d) * xi' * structure(d) * xi,
+    lpdf = @inbounds map(xi -> -0.5 * scale(d) * xi' * structure(d) * xg,
                Distributions.eachvariate(x, Distributions.variate_form(typeof(d))))
     return logpdf .+ lpdf
 end
