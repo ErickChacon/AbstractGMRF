@@ -130,7 +130,7 @@ end
     logpdf = -0.5 * n * log(2.0 * pi)
     logpdf += 0.5 * n * log(scale(d))
     logpdf += 0.5 * sum(log.(real(λ)))
-    lpdf = @inbounds map(xi -> -0.5 * scale(d) * auxfun(x),
+    lpdf = @inbounds map(xi -> -0.5 * scale(d) * auxfun(xi),
                Distributions.eachvariate(x, Distributions.variate_form(typeof(d))))
     println("GMRF:")
     return real(logpdf .+ lpdf)
