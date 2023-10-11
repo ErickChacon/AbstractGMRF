@@ -10,11 +10,13 @@ end
 
 # Constructors
 
-GMRF(g::CartesianGrid, order::Integer, κ::Real, δ::Real; circular = false) =
-    GMRF(structure(g; δ = δ, order = order, circular = circular), κ)
+GMRF(d::CartesianGrid, order::Integer, κ::Real, δ::Real; circular = false) =
+    GMRF(structure(d; δ = δ, order = order, circular = circular), κ)
 
-GMRF(g::SimpleGraph, order::Integer, κ::Real, δ::Real) =
-    GMRF(structure(g; δ = δ, order = order), κ)
+GMRF(d::SimpleGraph, order::Integer, κ::Real, δ::Real) =
+    GMRF(structure(d; δ = δ, order = order), κ)
+
+GMRF(d::GeometrySet, order::Integer, κ::Real, δ::Real) = GMRF(SimpleGraph(adjacency(d)), order, κ, δ)
 
 # Methods
 
