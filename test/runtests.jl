@@ -13,8 +13,7 @@ xpxt(x::SparseMatrixCSC) = x + x'
 
 # Run tests
 
-files = ["utils.jl", "gmrf.jl"]
-# files = ["utils.jl"]
+files = ["utils.jl", "gmrf.jl", "cgmrf.jl"]
 
 for file in files
     include(file)

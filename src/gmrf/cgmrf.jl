@@ -96,7 +96,6 @@ function Distributions._logpdf(d::CGMRF, x::AbstractVector{<:Real})
     logpdf += 0.5 * n * log(scale(d))
     logpdf += 0.5 * sum(log.(real(λ)))
     logpdf -= 0.5 * scale(d) * sum(xmat .* u)
-    println("GMRF:")
     return real(logpdf)
 end
 
@@ -140,7 +139,6 @@ end
     logpdf += 0.5 * sum(log.(real(λ)))
     lpdf = @inbounds map(xi -> -0.5 * scale(d) * auxfun(xi),
                Distributions.eachvariate(x, Distributions.variate_form(typeof(d))))
-    println("GMRF:")
     return real(logpdf .+ lpdf)
 end
 
