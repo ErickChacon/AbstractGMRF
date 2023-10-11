@@ -8,21 +8,20 @@
 
     for i = 1:length(order)
         X = GMRF(grid, order[i], kappa[i], δ[i])
+        mvn = MvNormalCanon(Matrix(GMRFs.precision(X)))
         # basic methods
         @test length(X) == n
         @test GMRFs.scale(X) == kappa[i]
         @test GMRFs.structure(X) == GMRFs.structure(grid, δ = δ[i], order = order[i])
         @test GMRFs.precision(X) == structure(grid, δ = δ[i], order = order[i]) * GMRFs.scale(X)
-        # rand
+        # rand and logpdf: single
         x = rand(X)
         @test length(x) == n
+        @test isapprox(logpdf(X, x), logpdf(mvn, x))
+        # rand and logpdf: multiple
         x = rand(X, 3)
         @test size(x) == (n, 3)
-        # logpdf
-        lpdf = logpdf(X, x)
-        @test length(lpdf) == 3
-        mvn = MvNormalCanon(Matrix(GMRFs.precision(X)))
-        @test isapprox(lpdf, logpdf(mvn, x))
+        @test isapprox(logpdf(X, x), logpdf(mvn, x))
     end
 end
 
@@ -36,21 +35,20 @@ end
 
     for i = 1:length(order)
         X = GMRF(grid, order[i], kappa[i], δ[i])
+        mvn = MvNormalCanon(Matrix(GMRFs.precision(X)))
         # basic methods
         @test length(X) == n1 * n2
         @test GMRFs.scale(X) == kappa[i]
         @test GMRFs.structure(X) == GMRFs.structure(grid, δ = δ[i], order = order[i])
         @test GMRFs.precision(X) == structure(grid, δ = δ[i], order = order[i]) * GMRFs.scale(X)
-        # random realizations
+        # rand and logpdf: single
         x = rand(X)
         @test length(x) == n1 * n2
+        @test isapprox(logpdf(X, x), logpdf(mvn, x))
+        # rand and logpdf: multiple
         x = rand(X, 3)
         @test size(x) == (n1 * n2, 3)
-        # logpdf
-        lpdf = logpdf(X, x)
-        @test length(lpdf) == 3
-        mvn = MvNormalCanon(Matrix(GMRFs.precision(X)))
-        @test isapprox(lpdf, logpdf(mvn, x))
+        @test isapprox(logpdf(X, x), logpdf(mvn, x))
     end
 
 end
