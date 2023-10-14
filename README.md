@@ -18,3 +18,4 @@ Implementation of GMRF for spatial analysis.
 ## Todo
 
 - [ ] Check structure_base to return always `Integers`
+- [ ] Add test for grids with different dimensions size.
