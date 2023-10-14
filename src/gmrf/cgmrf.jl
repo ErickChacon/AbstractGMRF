@@ -31,7 +31,16 @@ CGMRF(domain::CartesianGrid, order::Integer, κ::Real, δ::Real) =
 Base.length(d::CGMRF) = length(d.base)
 scale(d::CGMRF) = d.κ
 structure_base(d::CGMRF) = d.base
-# structure(d::CGMRF) = structure(d.g; δ = d.δ, order = d.order, circular = true)
+
+function structure(d::CGMRF)
+    # get base and transpose for 2d
+    base = structure_base(d)
+    if base isa SparseMatrixCSC
+        base = sparse(base')
+    end
+    # convert to circulant
+    spcirculant(base)
+end
 
 ## Random generator
 

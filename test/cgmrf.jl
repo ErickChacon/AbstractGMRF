@@ -14,6 +14,7 @@
         @test length(X) == n
         @test GMRFs.scale(X) == kappa[i]
         @test GMRFs.structure_base(X) == GMRFs.structure_base(grid, order = order[i], δ = δ[i])
+        @test GMRFs.structure(X) == GMRFs.structure(grid, δ = δ[i], order = order[i], circular = true)
         # rand and logpdf: single
         x = rand(X)
         @test length(x) == n
@@ -41,6 +42,7 @@ end
         @test length(X) == n1 * n2
         @test GMRFs.scale(X) == kappa[i]
         @test GMRFs.structure_base(X) == GMRFs.structure_base(grid, order = order[i], δ = δ[i])
+        @test GMRFs.structure(X) == GMRFs.structure(grid, δ = δ[i], order = order[i], circular = true)
         # rand and logpdf: single
         x = rand(X)
         @test length(x) == n1 * n2

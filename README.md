@@ -14,3 +14,7 @@ Implementation of GMRF for spatial analysis.
 ## Graphs
 
 ![graphs](figures/03-graph.png)
+
+## Todo
+
+- [ ] Check structure_base to return always `Integers`

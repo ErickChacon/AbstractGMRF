@@ -112,12 +112,12 @@ end
     # circular: structure
     S = GMRFs.structure(grid, order = 1, circular = true)
     @test S == GMRFs.structure(graphc, order = 1)
-    @test S[1, :] == vec(GMRFs.structure_base(grid, order = 1))
+    @test S[1, :] == vec(GMRFs.structure_base(grid, order = 1)')
     S = GMRFs.structure(grid, order = 2, circular = true)
     @test S == GMRFs.structure(graphc, order = 2)
-    @test S[1, :] == vec(GMRFs.structure_base(grid, order = 2))
+    @test S[1, :] == vec(GMRFs.structure_base(grid, order = 2)')
     S = GMRFs.structure(grid, order = 3, circular = true)
     @test S == GMRFs.structure(graphc, order = 3)
-    @test S[1, :] == vec(GMRFs.structure_base(grid, order = 3))
+    @test S[1, :] == vec(GMRFs.structure_base(grid, order = 3)')
 
 end
